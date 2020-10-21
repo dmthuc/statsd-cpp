@@ -31,6 +31,8 @@ add_definitions(
     -std=c++11
     -Wall
     -pedantic
+    -Wno-old-style-cast
+    -Wno-unused-parameter
 )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
