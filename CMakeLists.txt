@@ -40,30 +40,30 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_library(statsd SHARED src/statsd.cpp include/statsd.hpp include/version.hpp)
 add_library(statsd_static STATIC src/statsd.cpp include/statsd.hpp include/version.hpp)
 
-add_executable(
-    statsd-test
-    test/statsd.cpp
-)
-
-IF (WIN32)
-  target_link_libraries(statsd-test statsd_static Ws2_32)
-ELSE()
-  target_link_libraries(statsd-test statsd pthread)
-ENDIF()
-
-
-enable_testing()
-
-function(add_memcheck_test name binary)
-    set(memcheck_command "${CMAKE_MEMORYCHECK_COMMAND} ${CMAKE_MEMORYCHECK_COMMAND_OPTIONS}")
-    separate_arguments(memcheck_command)
-    add_test(${name} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${binary})
-    if(HAVE_VALGRIND)
-        add_test(memcheck_${name} ${memcheck_command} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${binary})
-    endif()
-endfunction(add_memcheck_test)
-
-add_memcheck_test(StatsD statsd-test)
+#add_executable(
+#    statsd-test
+#    test/statsd.cpp
+#)
+#
+#IF (WIN32)
+#  target_link_libraries(statsd-test statsd_static Ws2_32)
+#ELSE()
+#  target_link_libraries(statsd-test statsd pthread)
+#ENDIF()
+#
+#
+#enable_testing()
+#
+#function(add_memcheck_test name binary)
+#    set(memcheck_command "${CMAKE_MEMORYCHECK_COMMAND} ${CMAKE_MEMORYCHECK_COMMAND_OPTIONS}")
+#    separate_arguments(memcheck_command)
+#    add_test(${name} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${binary})
+#    if(HAVE_VALGRIND)
+#        add_test(memcheck_${name} ${memcheck_command} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${binary})
+#    endif()
+#endfunction(add_memcheck_test)
+#
+#add_memcheck_test(StatsD statsd-test)
 
 install(FILES include/statsd.hpp DESTINATION include)
 
